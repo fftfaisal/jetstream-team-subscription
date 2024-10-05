@@ -12,7 +12,7 @@ A straightforward interface to handle subscriptions and features consumption.
 
 #### 1. Clone the repository
 ```bash
-git clone https:://github.com/fftfaisal/laravel-jetstream-team-subscription.git
+git clone https:://github.com/fftfaisal/jetstream-team-subscription.git
 ``` 
 
 #### 2. Install composer dependencies
@@ -55,5 +55,5 @@ STRIPE_GOLD_MONTHLY_PLAN=
 STRIPE_GOLD_YEARLY_PLAN=
 ```
 
-That's it! You are ready to go.
+### That's it! You are ready to go.
 

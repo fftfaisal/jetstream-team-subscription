@@ -21,6 +21,11 @@ composer install
 ```
 
 #### 3. Migration and seed
+
+```bash
+cp .env.example .env
+```
+
 ```bash
 php artisan migrate --seed
 ```

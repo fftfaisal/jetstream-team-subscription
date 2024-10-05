@@ -25,15 +25,19 @@ composer install
 ```bash
 cp .env.example .env
 ```
+#### Generate the application key
 
 ```bash
-php artisan migrate --seed
+php artisan key:generate
+```
+
+```bash
+php artisan migrate:fresh --seed
 ```
 
 #### 4. Install NPM dependencies
 ```bash
-
-npm install && npm run dev
+npm install && npm run build
 ```
 
 #### 5. Run the server
@@ -61,4 +65,5 @@ STRIPE_GOLD_YEARLY_PLAN=
 ```
 
 ### That's it! You are ready to go.
+
 

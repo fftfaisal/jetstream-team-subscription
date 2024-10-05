@@ -12,7 +12,7 @@ A straightforward interface to handle subscriptions and features consumption.
 
 #### 1. Clone the repository
 ```bash
-git clone https:://github.com/fftfaisal/jetstream-team-subscription.git
+git clone https://github.com/fftfaisal/jetstream-team-subscription.git
 ``` 
 
 #### 2. Install composer dependencies

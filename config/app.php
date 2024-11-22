@@ -123,4 +123,8 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+     * Code Editor
+     */
+    'editor' => env('APP_CODE_EDITOR', 'phpstorm'),
 ];

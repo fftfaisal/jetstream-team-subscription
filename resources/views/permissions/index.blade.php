@@ -11,6 +11,6 @@
 
         <x-section-border />
 
-        @livewire('ManageRole', ['roles' => $roles, 'permissions' => $permissions])
+        @livewire('ManageRole', ['permissions' => $permissions])
     </div>
 </x-app-layout>

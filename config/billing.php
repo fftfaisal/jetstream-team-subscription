@@ -7,6 +7,8 @@ return [
             'short_description' => 'This a basic plan with some limited features.',
             'monthly_id' => env('STRIPE_BASIC_MONTHLY_PLAN', ''),
             'yearly_id' => env('STRIPE_BASIC_YEARLY_PLAN', ''),
+            'monthly_price' => env('STRIPE_BASIC_MONTHLY_PRICE', ''),
+            'yearly_price' => env('STRIPE_BASIC_YEARLY_PRICE', ''),
             'yearly_incentive' => 'Save 10%',
             'features' => [
                 'Feature 1',
@@ -19,6 +21,8 @@ return [
             'short_description' => 'Everything from basic also some extended features.',
             'monthly_id' => env('STRIPE_GOLD_MONTHLY_PLAN', ''),
             'yearly_id' => env('STRIPE_GOLD_YEARLY_PLAN', ''),
+            'monthly_price' => env('STRIPE_GOLD_MONTHLY_PRICE', ''),
+            'yearly_price' => env('STRIPE_GOLD_YEARLY_PRICE', ''),
             'yearly_incentive' => 'Save 15%',
             'features' => [
                 'Feature 1',
@@ -33,6 +37,8 @@ return [
             'short_description' => 'This is most valuable plan that you need.',
             'monthly_id' => env('STRIPE_PREMIUM_MONTHLY_PLAN', ''),
             'yearly_id' => env('STRIPE_PREMIUM_YEARLY_PLAN', ''),
+            'monthly_price' => env('STRIPE_PREMIUM_MONTHLY_PRICE', ''),
+            'yearly_price' => env('STRIPE_PREMIUM_YEARLY_PRICE', ''),
             'yearly_incentive' => 'Save 25%',
             'features' => [
                 'Feature 1',

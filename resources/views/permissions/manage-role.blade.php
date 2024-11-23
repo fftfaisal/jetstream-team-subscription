@@ -13,7 +13,7 @@
             <!-- Team Member List -->
             <x-slot name="content">
                 <div class="space-y-6">
-                    @foreach($roles as $role)
+                    @forelse($roles as $role)
                         <div class="flex items-center justify-between">
                             <div class="break-all dark:text-white">
                                 {{ $role->name }}
@@ -23,20 +23,41 @@
                                     ({{ $role->users_count }}) {{ Str::plural('User', $role->users_count) }}
                                 </div>
 
-                                <x-confirms-password wire:then="manageRolePermissions({{ $role->id }})">
-                                    <button type="button" class="cursor-pointer ms-6 text-sm text-gray-400 underline">
+                                @if(Auth::user()->currentTeam->id === $role->team_id)
+                                    <x-confirms-password wire:then="manageRolePermissions({{ $role->id }})">
+                                        <button type="button" class="cursor-pointer ms-6 text-sm text-gray-400 underline">
+                                            {{ __('Permissions') }}
+                                        </button>
+                                    </x-confirms-password>
+
+                                    <x-confirms-password wire:then="confirmRoleDeletion({{ $role->id }})">
+                                        <button type="button" class="cursor-pointer ms-6 text-sm text-red-500">
+                                            {{ __('Delete') }}
+                                        </button>
+                                    </x-confirms-password>
+                                @else
+                                    <button type="button" class="cursor-not-allowed ms-6 text-sm text-gray-400 underline">
                                         {{ __('Permissions') }}
                                     </button>
-                                </x-confirms-password>
-
-                                <x-confirms-password wire:then="confirmRoleDeletion({{ $role->id }})">
-                                    <button type="button" class="cursor-pointer ms-6 text-sm text-red-500">
+                                    <button type="button" class="cursor-not-allowed ms-6 text-sm text-gray-400 underline">
                                         {{ __('Delete') }}
                                     </button>
-                                </x-confirms-password>
+                                @endif
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="text-center text-red-500 font-bold">
+                            {{ __('No roles found.') }}
+                        </div>
+                    @endforelse
+
+                    @if($roles->hasPages())
+                        {{ $roles->links() }}
+                    @endif
+
+                    <x-action-message class="text-red-600" on="role-error">
+                        {{ __('Role can not be deleted!') }}
+                    </x-action-message>
                 </div>
             </x-slot>
         </x-action-section>

@@ -27,12 +27,13 @@
                                 </a>
                             </div>
                         @else
-                            <div id="error-message" class="hidden p-2 mt-4 bg-pink-100"></div>
+                            <div id="error-message" class="hidden p-2 mt-4 bg-red-300"></div>
+                            <div id="success-message" class="hidden p-2 mt-4 bg-green-100"></div>
                             <div class="flex items-center gap-2 mt-4">
-                                Switch to
                                 <label class="inline-flex items-center me-5 cursor-pointer">
+                                    <span class="me-3 text-sm font-medium text-gray-900 dark:text-gray-300">Monthly</span>
                                     <input type="checkbox" value="" class="sr-only peer" checked>
-                                    <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
+                                    <div class="relative w-11 h-6 rounded-full peer peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 bg-red-600"></div>
                                     <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Yearly</span>
                                 </label>
                             </div>
@@ -64,8 +65,8 @@
                                                 @endforeach
                                             </ul>
                                         </div>
-                                        <div class="mt-auto py-3 px-4">
-                                            <x-button class="" onclick="subscribe('{{ $plan['monthly_id'] }}')">
+                                        <div class="mt-auto py-3 px-4" x-data>
+                                            <x-button type="button" onclick="subscribe('{{ $plan['monthly_id'] }}')" @click="$el.setAttribute('disabled', true)">
                                                 Subscribe
                                             </x-button>
                                         </div>
@@ -91,11 +92,15 @@
         </div>
     </div>
 </x-app-layout>
-
 <script>
+    document.addEventListener('livewire:initialized', () => {
+        console.log(window.Livewire);
+    });
     function subscribe(plan) {
         const error = document.getElementById('error-message');
+        const success = document.getElementById('success-message');
         error.classList.add('hidden');
+        success.classList.add('hidden');
 
         axios.post('/subscribe', {
             plan: plan,
@@ -103,16 +108,18 @@
         })
         .then(res => {
             if (res.data.status) {
-                error.classList.remove('hidden');
+                error.classList.add('hidden');
+                success.classList.remove('hidden');
                 error.innerText = res.data.message;
                 window.location.href = res.data.url;
             } else {
                 window.location.reload();
             }
         })
-        .catch(error => {
+        .catch(res => {
+            success.classList.add('hidden');
             error.classList.remove('hidden');
-            error.innerText = error.response.data.message;
+            error.innerText = res.response.data.message;
         });
     }
 </script>

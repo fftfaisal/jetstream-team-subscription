@@ -2,17 +2,17 @@
 
 namespace App\Livewire;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Laravel\Jetstream\ConfirmsPasswords;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
 
 class ManageRole extends Component
 {
-    use ConfirmsPasswords;
-
-    public $roles;
+    use ConfirmsPasswords, WithPagination;
 
     public $permissions;
 
@@ -38,13 +38,7 @@ class ManageRole extends Component
 
     public function mount($permissions): void
     {
-        $this->roles = Role::with('permissions')->withCount('users')->get();
         $this->permissions = $permissions;
-    }
-
-    public function refreshRoles(): void
-    {
-        $this->roles = Role::with('permissions')->withCount('users')->get();
     }
 
     public function manageRolePermissions($roleId): void
@@ -91,6 +85,11 @@ class ManageRole extends Component
         $this->confirmingRoleRemoval = false;
         $role = Role::find($this->roleIdBeingDeleted);
 
+        if (! $role || $role->team_id !== Auth::user()->currentTeam->id) {
+            $this->dispatch('role-error');
+            return;
+        }
+
         $role->permissions()->detach();
         $role->users()->detach();
         $role->delete();
@@ -100,6 +99,11 @@ class ManageRole extends Component
 
     public function render(): View
     {
-        return view('permissions.manage-role');
+        $roles = Role::with('permissions')
+            ->where('team_id', Auth::user()->currentTeam->id)
+            ->withCount('users')
+            ->paginate();
+
+        return view('permissions.manage-role', compact('roles'));
     }
 }

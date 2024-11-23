@@ -40,7 +40,7 @@ class CreateRoleForm extends Component
 
         Role::create(['name' => $this->name])->permissions()->attach($this->selectedPermissions);
 
-        $this->reset('name', 'selectedPermissions');
+        $this->reset('name', 'selectedPermissions', 'selectingAllPermissions');
 
         $this->dispatch('role-created');
     }

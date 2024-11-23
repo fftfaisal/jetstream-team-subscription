@@ -15,7 +15,7 @@ class BillingController extends Controller
     public function subscribe(Request $request) {
 
         $subscription = $request->user()->currentTeam->newSubscription('main', $request->plan)->trialDays(5)->checkout([
-            'success_url' => route('dashboard'),
+            'success_url' => route('dashboard', ['success' => 'true']),
             'cancel_url' => route('pricing'),
         ]);
 
